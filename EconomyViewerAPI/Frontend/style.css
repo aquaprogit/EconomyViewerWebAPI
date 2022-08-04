@@ -1,66 +1,13 @@
+* {
+    box-sizing: border-box;
+}
+
 html,
 body {
     margin: 0;
     left: 0;
     top: 0;
     height: 100%;
-    width: 100%;
-}
-
-.sidenav {
-    height: 100%;
-    background-color: #62D9FF;
-    width: 130px;
-    display: flex;
-    align-content: center;
-    flex-direction: column;
-    float: left;
-}
-
-.img-container {
-    display: flex;
-    align-content: center;
-    transition: .2s;
-    justify-content: center;
-    margin: 15px 0;
-}
-
-.img-container img {
-    height: 60px;
-    width: 60px;
-}
-
-.sidenav a {
-    color: blink;
-    z-index: 100;
-    font-size: 24px;
-    text-align: center;
-    text-decoration: none;
-    padding: 10px 5px;
     font-family: Quicksand;
-    font-weight: normal;
-    transition: .2s;
-}
-
-.sidenav a:hover {
-    color: white;
-    background-color: rgb(255, 168, 55);
-    font-weight: bold;
-    width: 150px;
-}
-
-#settings {
-    bottom: 0;
-    margin-top: auto;
-}
-
-.main {
-    margin: 0;
-    height: 100%;
     width: 100%;
-}
-
-.main h1 {
-    margin: 0;
-    text-align: center;
 }
