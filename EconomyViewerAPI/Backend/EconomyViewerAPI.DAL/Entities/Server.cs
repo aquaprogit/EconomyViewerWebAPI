@@ -1,6 +1,10 @@
-﻿namespace EconomyViewerAPI.DAL.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace EconomyViewerAPI.DAL.Entities;
 public class Server
 {
+    [Key]
     public string Name { get; set; } = string.Empty;
     public List<Item> Items { get; set; } = new();
 
