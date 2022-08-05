@@ -28,4 +28,8 @@ public class ServerService
     {
         return await _context.Servers.Include(s => s.Items).FirstOrDefaultAsync(server => server.Name == name);
     }
+    public async Task<List<string>> GetServerNames()
+    {
+        return await _context.Servers.Select(s => s.Name).ToListAsync();
+    }
 }

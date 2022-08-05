@@ -39,4 +39,17 @@ public class MainController : ControllerBase
             return BadRequest();
         }
     }
+    [HttpGet("server/names")]
+    public async Task<IActionResult> GetServerNames()
+    {
+        try
+        {
+            var names = await _serverService.GetServerNames();
+            return Ok(names);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest();
+        }
+    }
 }
