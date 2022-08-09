@@ -28,42 +28,64 @@ public abstract class BaseRepo<T> : IRepo<T> where T : class
         _disposeContext = true;
     }
 
-    public int Add(T entity, bool persist = true)
+    public virtual int Add(T entity, bool persist = true)
     {
-        throw new NotImplementedException();
+        Table.Add(entity);
+        return persist ? SaveChanges() : 0;
+    }
+    public virtual async Task<int> AddAsync(T entity, bool persist = true)
+    {
+        await Table.AddAsync(entity);
+        return persist ? await SaveChangesAsync() : 0;
+    }
+    public virtual int AddRange(IEnumerable<T> entities, bool persist = true)
+    {
+        Table.AddRange(entities);
+        return persist ? SaveChanges() : 0;
+    }
+    public virtual async Task<int> AddRangeAsync(IEnumerable<T> entities, bool persist = true)
+    {
+        await Table.AddRangeAsync(entities);
+        return persist ? await SaveChangesAsync() : 0;
     }
 
-    public int AddRange(IEnumerable<T> entities, bool persist = true)
+    public virtual int Update(T entity, bool persist = true)
     {
-        throw new NotImplementedException();
+        Table.Update(entity);
+        return persist ? SaveChanges() : 0;
+    }
+    public virtual int UpdateRange(IEnumerable<T> entities, bool persist = true)
+    {
+        Table.UpdateRange(entities);
+        return persist ? SaveChanges() : 0;
     }
 
-    public int Delete(int id, byte[] timeStamp, bool persist = true)
+    public virtual int Delete(T entity, bool persist = true)
     {
-        throw new NotImplementedException();
+        Table.Remove(entity);
+        return persist ? SaveChanges() : 0;
+    }
+    public virtual int DeleteRange(IEnumerable<T> entities, bool persist = true)
+    {
+        Table.RemoveRange(entities);
+        return persist ? SaveChanges() : 0;
     }
 
-    public int Delete(T entity, bool persist = true)
+    public virtual T? Find(int id)
     {
-        throw new NotImplementedException();
+        return Table.Find(id);
+    }
+    public virtual async Task<T?> FindAsync(int id)
+    {
+        return await Table.FindAsync(id);
     }
 
-    public int DeleteRange(IEnumerable<T> entities, bool persist = true)
+    public virtual IEnumerable<T> GetAll()
     {
-        throw new NotImplementedException();
+        return Table;
     }
 
-    public T? Find(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<T> GetAll()
-    {
-        throw new NotImplementedException();
-    }
-
-    public int SaveChanges()
+    public virtual int SaveChanges()
     {
         try
         {
@@ -74,17 +96,17 @@ public abstract class BaseRepo<T> : IRepo<T> where T : class
             throw new Exception("An error occurred updating the database", ex);
         }
     }
-
-    public int Update(T entity, bool persist = true)
+    public virtual async Task<int> SaveChangesAsync()
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await Context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred updating the database", ex);
+        }
     }
-
-    public int UpdateRange(IEnumerable<T> entities, bool persist = true)
-    {
-        throw new NotImplementedException();
-    }
-
     protected virtual void Dispose(bool disposing)
     {
         if (_disposed)
