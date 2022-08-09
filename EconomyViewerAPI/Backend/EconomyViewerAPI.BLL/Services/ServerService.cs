@@ -1,4 +1,5 @@
 ﻿
+using EconomyViewerAPI.BLL.Repos.Interfaces;
 using EconomyViewerAPI.BLL.Services.Interfaces;
 using EconomyViewerAPI.DAL.EF;
 using EconomyViewerAPI.DAL.Entities;
@@ -8,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 namespace EconomyViewerAPI.BLL.Services;
 public class ServerService
 {
-    private readonly ApplicationContext _context;
+    private readonly IServerRepo _repo;
     private readonly IServerLoader _serverLoader;
-    public ServerService(ApplicationContext context, IServerLoader server)
+    public ServerService(IServerRepo repo, IServerLoader server)
     {
-        _context = context ?? throw new ArgumentNullException(nameof(context));
+        _repo = repo;
         _serverLoader = server ?? throw new ArgumentNullException(nameof(server));
     }
     public async Task FillServersAsync()
@@ -20,16 +21,20 @@ public class ServerService
         List<Server> downloaded = await _serverLoader.GetAllServersAsync();
         foreach (Server server in downloaded)
         {
-            _context.Servers.Add(server);
+            await _repo.AddAsync(server, false);
         }
-        await _context.SaveChangesAsync();
+        await _repo.SaveChangesAsync();
     }
     public async Task<Server?> GetServer(string name)
     {
-        return await _context.Servers.Include(s => s.Items).FirstOrDefaultAsync(server => server.Name == name);
+        return await _repo.Table.FirstOrDefaultAsync(server => server.Name == name);
+    }
+    public async Task<Server?> GetServer(int id)
+    {
+        return await _repo.FindAsync(id);
     }
     public async Task<List<string>> GetServerNames()
     {
-        return await _context.Servers.Select(s => s.Name).ToListAsync();
+        return await _repo.Table.Select(s => s.Name).ToListAsync();
     }
 }

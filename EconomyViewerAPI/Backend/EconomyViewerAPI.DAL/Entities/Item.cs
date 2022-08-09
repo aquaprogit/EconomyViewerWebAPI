@@ -25,6 +25,7 @@ public class Item
     public string Mod { get; set; } = string.Empty;
 
     public int PriceForOne => Price / Count;
+    public Server Server { get; set; } = new();
     public Item() { }
 
     public Item(string header, int count, int price, string mod)

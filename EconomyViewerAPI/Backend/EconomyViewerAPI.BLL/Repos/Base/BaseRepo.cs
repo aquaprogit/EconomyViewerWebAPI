@@ -23,10 +23,6 @@ public abstract class BaseRepo<T> : IRepo<T> where T : class
         Table = Context.Set<T>();
         _disposeContext = false;
     }
-    protected BaseRepo(DbContextOptions<ApplicationContext> options) : this(new ApplicationContext(options))
-    {
-        _disposeContext = true;
-    }
 
     public virtual int Add(T entity, bool persist = true)
     {

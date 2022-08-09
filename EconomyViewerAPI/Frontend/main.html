@@ -2,24 +2,30 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand" />
+    <link rel="stylesheet" hred="https://fonts.googleapis.com/css?family=Overpass" />
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+    <div class="huinya">
+
+    </div>
     <div class="navbar">
         <a id="first-item-nav">EconomyViewer</a>
         <div class="subnav">
-            <button class="subnavbtn"> Servers
-                <i class="fa fa-caret-down">
-                    </i>
-                        </button>
-            <div class="subnav-content" id="servers">
-            </div>
+            <button class="subnavbtn">
+          Servers
+          <i class="fa fa-caret-down"></i>
+        </button>
+            <div class="subnav-content" id="servers"></div>
         </div>
         <a href=""> Edit</a>
         <a href=""> Add</a>
         <a id="last-item-nav"> Settings</a>
+    </div>
+    <div class="myDropDown">
+        <input type="text" placeholder="Search..." id="inputSearch" onkeyup="filterEntered()" />
     </div>
     <script src="main.js"></script>
 </body>

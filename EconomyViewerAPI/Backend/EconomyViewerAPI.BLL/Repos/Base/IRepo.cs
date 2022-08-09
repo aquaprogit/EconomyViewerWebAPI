@@ -1,6 +1,9 @@
-﻿namespace EconomyViewerAPI.BLL.Repos.Base;
-public interface IRepo<T> : IDisposable
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace EconomyViewerAPI.BLL.Repos.Base;
+public interface IRepo<T> : IDisposable where T : class
 {
+    DbSet<T> Table { get; }
     int Add(T entity, bool persist = true);
     Task<int> AddAsync(T entity, bool persist = true);
 

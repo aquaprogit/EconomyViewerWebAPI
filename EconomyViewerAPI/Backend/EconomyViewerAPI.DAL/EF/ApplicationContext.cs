@@ -12,9 +12,6 @@ public class ApplicationContext : DbContext
     {
         Database.EnsureCreated();
     }
-
-    public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite(@"Data Source=" + Path.GetDirectoryName(Environment.ProcessPath) + $@"\economy.db;");
@@ -23,6 +20,6 @@ public class ApplicationContext : DbContext
     {
         modelBuilder.Entity<Server>()
                     .HasMany(server => server.Items)
-                    .WithOne();
+                    .WithOne(item => item.Server);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EconomyViewerAPI.BLL.Exceptions;
+using EconomyViewerAPI.BLL.Repos.Interfaces;
 using EconomyViewerAPI.DAL.EF;
 using EconomyViewerAPI.DAL.Entities;
 
@@ -7,24 +8,21 @@ using Microsoft.EntityFrameworkCore;
 namespace EconomyViewerAPI.BLL.Services;
 public class ItemService
 {
-    private ApplicationContext _context;
+    private readonly IItemRepo _itemRepo;
 
-    public ItemService(ApplicationContext context)
+    public ItemService(IItemRepo repo)
     {
-        _context = context ?? throw new ArgumentNullException(nameof(context));
+        _itemRepo = repo;
     }
 
     public async Task<Item> GetItem(int serverId, string name)
     {
-        Server server = await _context.Servers.Include(s => s.Items).FirstAsync(server => server.Id == serverId);
-        return server.Items.FirstOrDefault(item => item.Header == name) ?? throw new ItemNotFoundException(name);
+        return await _itemRepo.Table.FirstAsync(item => item.Header == name && item.Server.Id == serverId);
     }
 
     public async Task<bool> DeleteItem(int serverId, string itemName)
     {
-        Server server = await _context.Servers.Include(s => s.Items).FirstAsync(server => server.Id == serverId);
-        bool result = server.Items.Remove(server.Items.First(item => item.Header == itemName));
-        await _context.SaveChangesAsync();
-        return result;
+        Item item = await _itemRepo.Table.FirstOrDefaultAsync(item => item.Header == itemName && item.Server.Id == serverId) ?? new();
+        return _itemRepo.Delete(item) > 0;
     }
 }

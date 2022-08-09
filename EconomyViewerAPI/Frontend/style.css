@@ -15,6 +15,7 @@ body {
 .navbar {
     overflow: hidden;
     background-color: #333;
+    border-bottom: .3px solid white;
 }
 
 .navbar a {
@@ -64,7 +65,7 @@ body {
 }
 
 .subnav-content a:hover {
-    background-color: #eee;
+    background-color: white;
     color: black;
 }
 
@@ -77,6 +78,14 @@ body {
 }
 
 #first-item-nav {
-    border-width: 2px;
-    border-color: #eee;
+    border-right: 1px solid white;
+    background-color: brown;
+    font-weight: bold;
+}
+
+#server-items-select {
+    margin: 100px;
+    width: 150px;
+    font-size: 24px;
+    font-family: "Overpass", sans-serif;
 }
