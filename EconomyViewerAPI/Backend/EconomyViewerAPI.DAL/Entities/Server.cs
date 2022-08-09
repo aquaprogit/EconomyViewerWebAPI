@@ -15,4 +15,16 @@ public class Server
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Items = items ?? throw new ArgumentNullException(nameof(items));
     }
+    public override bool Equals(object? obj)
+    {
+        return obj is Server server &&
+            server.Items.Count == Items.Count &&
+            server.Items.SequenceEqual(Items) &&
+            server.Name == Name;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Items, Name);
+    }
 }

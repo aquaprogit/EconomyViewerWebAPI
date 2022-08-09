@@ -17,8 +17,7 @@ public class ServerController : ControllerBase
     [HttpGet("loadFromForum/")]
     public async Task<IActionResult> LoadFromForum()
     {
-        await _serverService.FillServersAsync();
-        return Ok();
+        return Ok(await _serverService.FillServersAsync());
     }
     [HttpGet("{name}")]
     public async Task<IActionResult> GetServer(string name)

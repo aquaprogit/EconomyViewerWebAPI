@@ -16,14 +16,20 @@ public class ServerService
         _repo = repo;
         _serverLoader = server ?? throw new ArgumentNullException(nameof(server));
     }
-    public async Task FillServersAsync()
+    public async Task<int> FillServersAsync()
     {
         List<Server> downloaded = await _serverLoader.GetAllServersAsync();
         foreach (Server server in downloaded)
         {
-            await _repo.AddAsync(server, false);
+            Server? alreadyAdded = _repo.Find(server.Name);
+            if (alreadyAdded == null || server.Equals(alreadyAdded) == false)
+            {
+                if (alreadyAdded != null)
+                    _repo.Delete(alreadyAdded);
+                await _repo.AddAsync(server);
+            }
         }
-        await _repo.SaveChangesAsync();
+        return await _repo.SaveChangesAsync();
     }
     public async Task<Server?> GetServer(string name)
     {
