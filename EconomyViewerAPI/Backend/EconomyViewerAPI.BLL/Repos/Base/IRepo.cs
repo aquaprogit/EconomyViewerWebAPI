@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EconomyViewerAPI.BLL.Repos;
+﻿namespace EconomyViewerAPI.BLL.Repos.Base;
 public interface IRepo<T> : IDisposable
 {
     int Add(T entity, bool persist = true);
