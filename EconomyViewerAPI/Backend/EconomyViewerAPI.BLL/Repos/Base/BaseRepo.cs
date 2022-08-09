@@ -65,7 +65,14 @@ public abstract class BaseRepo<T> : IRepo<T> where T : class
 
     public int SaveChanges()
     {
-        throw new NotImplementedException();
+        try
+        {
+            return Context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred updating the database", ex);
+        }
     }
 
     public int Update(T entity, bool persist = true)
@@ -88,12 +95,10 @@ public abstract class BaseRepo<T> : IRepo<T> where T : class
 
         _disposed = true;
     }
-
     ~BaseRepo()
     {
         Dispose(disposing: false);
     }
-
     public void Dispose()
     {
         Dispose(disposing: true);
