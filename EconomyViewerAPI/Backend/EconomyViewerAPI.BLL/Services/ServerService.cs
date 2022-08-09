@@ -25,7 +25,10 @@ public class ServerService
             if (alreadyAdded == null || server.Equals(alreadyAdded) == false)
             {
                 if (alreadyAdded != null)
+                {
                     _repo.Delete(alreadyAdded);
+                    server.Id = alreadyAdded.Id;
+                }
                 await _repo.AddAsync(server);
             }
         }
