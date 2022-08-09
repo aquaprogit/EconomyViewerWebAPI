@@ -22,7 +22,7 @@ public class ItemService
 
     public async Task<bool> DeleteItem(int serverId, string itemName)
     {
-        Item item = await _itemRepo.Table.FirstOrDefaultAsync(item => item.Header == itemName && item.Server.Id == serverId) ?? new();
-        return _itemRepo.Delete(item) > 0;
+        Item? item = await _itemRepo.Table.FirstOrDefaultAsync(item => item.Header == itemName && item.Server.Id == serverId);
+        return item != null && _itemRepo.Delete(item) > 0;
     }
 }

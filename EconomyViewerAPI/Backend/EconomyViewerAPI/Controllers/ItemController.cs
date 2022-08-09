@@ -23,6 +23,6 @@ public class ItemController : ControllerBase
     [HttpDelete("fromServer/{serverId}/{itemName}")]
     public async Task<IActionResult> DeleteItemByName(int serverId, string itemName)
     {
-        return Ok(await _itemService.DeleteItem(serverId, itemName));
-    } 
+        return await _itemService.DeleteItem(serverId, itemName) ? Ok() : NotFound();
+    }
 }

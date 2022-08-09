@@ -7,7 +7,6 @@ public class ApplicationContext : DbContext
 {
     public virtual DbSet<Item> Items { get; set; }
     public virtual DbSet<Server> Servers { get; set; }
-
     public ApplicationContext()
     {
         Database.EnsureCreated();
