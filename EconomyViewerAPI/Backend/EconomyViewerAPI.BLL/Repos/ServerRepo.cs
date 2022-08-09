@@ -23,6 +23,13 @@ public class ServerRepo : BaseRepo<Server>, IServerRepo
                     .Include(server => server.Items)
                     .FirstOrDefault();
     }
+    public Server? Find(string name)
+    {
+        return Table.IgnoreQueryFilters()
+                    .Where(server => server.Name == name)
+                    .Include(server => server.Items)
+                    .SingleOrDefault();
+    }
     public override async Task<Server?> FindAsync(int id)
     {
         return await Table.IgnoreQueryFilters()
