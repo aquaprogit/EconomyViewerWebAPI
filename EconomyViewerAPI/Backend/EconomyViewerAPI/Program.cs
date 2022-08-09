@@ -4,9 +4,12 @@ using EconomyViewerAPI.DAL.EF;
 using EconomyViewerAPI.BLL.Filters;
 using EconomyViewerAPI.BLL.Repos;
 using EconomyViewerAPI.BLL.Repos.Interfaces;
+using EconomyViewerAPI.BLL.Profiles;
 
 WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
+
+builder.Services.AddAutoMapper(typeof(ItemProfile));
 
 builder.Services.AddDbContext<ApplicationContext>();
 

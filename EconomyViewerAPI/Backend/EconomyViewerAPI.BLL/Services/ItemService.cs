@@ -1,5 +1,9 @@
-﻿using EconomyViewerAPI.BLL.Exceptions;
+﻿using AutoMapper;
+
+using EconomyViewerAPI.BLL.Exceptions;
+using EconomyViewerAPI.BLL.Profiles;
 using EconomyViewerAPI.BLL.Repos.Interfaces;
+using EconomyViewerAPI.DAL.DTO;
 using EconomyViewerAPI.DAL.EF;
 using EconomyViewerAPI.DAL.Entities;
 
@@ -9,15 +13,17 @@ namespace EconomyViewerAPI.BLL.Services;
 public class ItemService
 {
     private readonly IItemRepo _itemRepo;
+    private readonly IMapper _mapper;
 
-    public ItemService(IItemRepo repo)
+    public ItemService(IItemRepo repo, IMapper mapper)
     {
         _itemRepo = repo;
+        _mapper = mapper;
     }
 
-    public async Task<Item> GetItem(int serverId, string name)
+    public async Task<ItemDTO> GetItem(int serverId, string name)
     {
-        return await _itemRepo.Table.FirstAsync(item => item.Header == name && item.Server.Id == serverId);
+        return _mapper.Map<ItemDTO>(await _itemRepo.Table.FirstAsync(item => item.Header == name && item.Server.Id == serverId));
     }
 
     public async Task<bool> DeleteItem(int serverId, string itemName)
