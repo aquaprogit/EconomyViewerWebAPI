@@ -12,6 +12,9 @@ public class ApplicationContext : DbContext
     {
         Database.EnsureCreated();
     }
+
+    public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite(@"Data Source=" + Path.GetDirectoryName(Environment.ProcessPath) + $@"\economy.db;");
