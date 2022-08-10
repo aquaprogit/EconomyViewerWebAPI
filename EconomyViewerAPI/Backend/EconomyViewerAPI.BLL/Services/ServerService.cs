@@ -43,6 +43,11 @@ public class ServerService
     {
         return _mapper.Map<ServerDTO>(await _repo.FindAsync(name));
     }
+    public async Task<bool> DeleteServer(string name)
+    {
+        Server? entity = await _repo.FindAsync(name);
+        return entity != null && _repo.Delete(entity) > 0;
+    }
     public async Task<List<string>> GetServerNames()
     {
         return await _repo.Table.Select(s => s.Name).ToListAsync();

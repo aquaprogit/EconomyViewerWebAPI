@@ -24,6 +24,11 @@ public class ServerController : ControllerBase
     {
         return Ok(await _serverService.GetServer(name));
     }
+    [HttpDelete("[action]/{name}")]
+    public async Task<IActionResult> Delete(string name)
+    {
+        return await _serverService.DeleteServer(name) ? Ok(name) : NotFound(name);
+    }
     [HttpGet("names")]
     public async Task<IActionResult> GetServerNames()
     {
