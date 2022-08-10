@@ -62,9 +62,14 @@ public class ServersParser : IServerLoader
             {
                 Item? item = ItemFromString(line, currentMod);
                 if (item == null)
+                {
                     currentMod = line.TrimEnd(':', '*').Replace("&amp; ", "");
+                }
                 else
+                {
+                    item.ServerName = serverName;
                     result.Add(item);
+                }
             }
             return result;
         });
