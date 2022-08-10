@@ -16,7 +16,10 @@ public class ServerProfile : Profile
     public ServerProfile()
     {
         _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<Item, ItemDTO>().ReverseMap()));
-        CreateMap<Server, ServerDTO>()
-            .ForMember(dest => dest.Items, opt => opt.MapFrom(s => s.Items.Select(i => _mapper.Map<ItemDTO>(i))));
+        CreateMap<Server, ServerDTO>().ForMember(dest => dest.Items,
+                                            opt => opt.MapFrom(s => s.Items.Select(i => _mapper.Map<ItemDTO>(i))))
+                                      .ReverseMap()
+                                      .ForMember(dest => dest.Items,
+                                            opt => opt.MapFrom(s => s.Items.Select(i => _mapper.Map<Item>(i))));
     }
 }
