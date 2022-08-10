@@ -19,6 +19,6 @@ public class ApplicationContext : DbContext
     {
         modelBuilder.Entity<Server>()
                     .HasMany(server => server.Items)
-                    .WithOne(item => item.Server);
+                    .WithOne();
     }
 }

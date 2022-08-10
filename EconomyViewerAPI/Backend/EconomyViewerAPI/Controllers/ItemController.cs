@@ -1,4 +1,5 @@
 ﻿using EconomyViewerAPI.BLL.Services;
+using EconomyViewerAPI.DAL.DTO;
 using EconomyViewerAPI.DAL.Entities;
 
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,11 @@ public class ItemController : ControllerBase
     {
         _itemService = itemService ?? throw new ArgumentNullException(nameof(itemService));
     }
-
+    [HttpPost("add/")]
+    public async Task<IActionResult> CreateItem([FromBody] ItemDTO item)
+    {
+        return await _itemService.InsertItem(item) ? Ok(item) : BadRequest("Item already exists in the table");
+    }
     [HttpGet("fromServer/{serverName}/{itemName}")]
     public async Task<IActionResult> GetItemByName(string serverName, string itemName)
     {
