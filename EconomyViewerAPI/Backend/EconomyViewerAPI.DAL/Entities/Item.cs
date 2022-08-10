@@ -1,5 +1,5 @@
 ﻿namespace EconomyViewerAPI.DAL.Entities;
-public class Item
+public class Item : IEquatable<Item>
 {
     private int _count = 1;
     private int _price = 1;
@@ -25,7 +25,7 @@ public class Item
     public string Mod { get; set; } = string.Empty;
 
     public int PriceForOne => Price / Count;
-    public Server Server { get; set; } = new();
+    public string ServerName { get; set; } = string.Empty;
     public Item() { }
 
     public Item(string header, int count, int price, string mod)
@@ -44,11 +44,21 @@ public class Item
         return obj is Item item &&
             item.Header == Header &&
             item.PriceForOne == PriceForOne &&
-            item.Mod == Mod;
+            item.Mod == Mod &&
+            item.ServerName == ServerName;
     }
     public override int GetHashCode()
     {
         return HashCode.Combine(Header, PriceForOne, Mod);
+    }
+
+    public bool Equals(Item? other)
+    {
+        return other != null &&
+               other.Header == Header &&
+               other.PriceForOne == PriceForOne &&
+               other.Mod == Mod &&
+               other.ServerName == ServerName;
     }
 
     public static Item operator +(Item first, Item second)
