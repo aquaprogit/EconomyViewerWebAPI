@@ -22,6 +22,7 @@ public class ServerController : ControllerBase
     }
 
     [HttpPost("[action]/")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] ServerDTO server)
     {
         await _serverService.CreateServer(server);
@@ -29,11 +30,13 @@ public class ServerController : ControllerBase
     }
 
     [HttpGet("[action]/{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK), ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(string name)
     {
         return Ok(await _serverService.GetServer(name));
     }
     [HttpDelete("[action]/{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK), ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(string name)
     {
         return await _serverService.DeleteServer(name) ? Ok(name) : NotFound(name);
