@@ -1,4 +1,5 @@
 ﻿using EconomyViewerAPI.BLL.Services;
+using EconomyViewerAPI.DAL.DTO;
 using EconomyViewerAPI.DAL.Entities;
 
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,14 @@ public class ServerController : ControllerBase
     {
         return Ok(await _serverService.FillServersAsync());
     }
+
+    [HttpPost("[action]/")]
+    public async Task<IActionResult> Create([FromBody] ServerDTO server)
+    {
+        await _serverService.CreateServer(server);
+        return CreatedAtAction(nameof(Get), new { name = server.Name }, server);
+    }
+
     [HttpGet("[action]/{name}")]
     public async Task<IActionResult> Get(string name)
     {

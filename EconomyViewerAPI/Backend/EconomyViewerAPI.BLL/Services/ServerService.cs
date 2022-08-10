@@ -39,6 +39,10 @@ public class ServerService
         }
         return affected;
     }
+    public async Task CreateServer(ServerDTO server)
+    {
+        await _repo.AddAsync(_mapper.Map<Server>(server));
+    }
     public async Task<ServerDTO?> GetServer(string name)
     {
         return _mapper.Map<ServerDTO>(await _repo.FindAsync(name));
