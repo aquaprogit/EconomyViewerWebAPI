@@ -15,14 +15,14 @@ public class ItemController : ControllerBase
         _itemService = itemService ?? throw new ArgumentNullException(nameof(itemService));
     }
 
-    [HttpGet("fromServer/{serverId}/{itemName}")]
-    public async Task<IActionResult> GetItemByName(int serverId, string itemName)
+    [HttpGet("fromServer/{serverName}/{itemName}")]
+    public async Task<IActionResult> GetItemByName(string serverName, string itemName)
     {
-        return Ok(await _itemService.GetItem(serverId, itemName));
+        return Ok(await _itemService.GetItem(serverName, itemName));
     }
-    [HttpDelete("fromServer/{serverId}/{itemName}")]
-    public async Task<IActionResult> DeleteItemByName(int serverId, string itemName)
+    [HttpDelete("fromServer/{serverName}/{itemName}")]
+    public async Task<IActionResult> DeleteItemByName(string serverName, string itemName)
     {
-        return await _itemService.DeleteItem(serverId, itemName) ? Ok() : NotFound();
+        return await _itemService.DeleteItem(serverName, itemName) ? Ok() : NotFound();
     }
 }

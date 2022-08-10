@@ -18,9 +18,6 @@ public interface IRepo<T> : IDisposable where T : class
 
     int DeleteRange(IEnumerable<T> entities, bool persist = true);
 
-    T? Find(int id);
-    Task<T?> FindAsync(int id);
-
     IEnumerable<T> GetAll();
 
     int SaveChanges();

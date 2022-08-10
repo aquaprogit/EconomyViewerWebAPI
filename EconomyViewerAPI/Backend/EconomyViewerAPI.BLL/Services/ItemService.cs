@@ -21,14 +21,14 @@ public class ItemService
         _mapper = mapper;
     }
 
-    public async Task<ItemDTO> GetItem(int serverId, string name)
+    public async Task<ItemDTO> GetItem(string serverName, string name)
     {
-        return _mapper.Map<ItemDTO>(await _itemRepo.Table.FirstAsync(item => item.Header == name && item.Server.Id == serverId));
+        return _mapper.Map<ItemDTO>(await _itemRepo.Table.FirstAsync(item => item.Header == name && item.Server.Name == serverName));
     }
 
-    public async Task<bool> DeleteItem(int serverId, string itemName)
+    public async Task<bool> DeleteItem(string serverName, string itemName)
     {
-        Item? item = await _itemRepo.Table.FirstOrDefaultAsync(item => item.Header == itemName && item.Server.Id == serverId);
+        Item? item = await _itemRepo.Table.FirstOrDefaultAsync(item => item.Header == itemName && item.Server.Name == serverName);
         return item != null && _itemRepo.Delete(item) > 0;
     }
 }

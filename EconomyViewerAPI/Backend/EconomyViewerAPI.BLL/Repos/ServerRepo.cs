@@ -16,24 +16,17 @@ public class ServerRepo : BaseRepo<Server>, IServerRepo
         return Table.Include(server => server.Items)
                     .OrderBy(server => server.Name);
     }
-    public override Server? Find(int id)
-    {
-        return Table.IgnoreQueryFilters()
-                    .Where(server => server.Id == id)
-                    .Include(server => server.Items)
-                    .FirstOrDefault();
-    }
     public Server? Find(string name)
     {
         return Table.IgnoreQueryFilters()
                     .Where(server => server.Name == name)
                     .Include(server => server.Items)
-                    .SingleOrDefault();
+                    .FirstOrDefault();
     }
-    public override async Task<Server?> FindAsync(int id)
+    public async Task<Server?> FindAsync(string name)
     {
         return await Table.IgnoreQueryFilters()
-            .Where(server => server.Id == id)
+            .Where(server => server.Name == name)
             .Include(server => server.Items)
             .FirstOrDefaultAsync();
     }

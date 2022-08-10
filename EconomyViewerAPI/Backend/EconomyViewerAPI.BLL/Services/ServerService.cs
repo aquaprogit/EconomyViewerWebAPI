@@ -27,7 +27,6 @@ public class ServerService
                 if (alreadyAdded != null)
                 {
                     _repo.Delete(alreadyAdded);
-                    server.Id = alreadyAdded.Id;
                 }
                 await _repo.AddAsync(server);
             }
@@ -36,11 +35,7 @@ public class ServerService
     }
     public async Task<Server?> GetServer(string name)
     {
-        return await _repo.Table.FirstOrDefaultAsync(server => server.Name == name);
-    }
-    public async Task<Server?> GetServer(int id)
-    {
-        return await _repo.FindAsync(id);
+        return await _repo.FindAsync(name);
     }
     public async Task<List<string>> GetServerNames()
     {
