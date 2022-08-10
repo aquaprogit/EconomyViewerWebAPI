@@ -22,8 +22,7 @@ public class ServerController : ControllerBase
     [HttpGet("{name}")]
     public async Task<IActionResult> GetServer(string name)
     {
-        Server? server = await _serverService.GetServer(name);
-        return Ok(server);
+        return Ok(await _serverService.GetServer(name));
     }
     [HttpGet("names")]
     public async Task<IActionResult> GetServerNames()

@@ -9,7 +9,7 @@ using EconomyViewerAPI.BLL.Profiles;
 WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
 
-builder.Services.AddAutoMapper(typeof(ItemProfile));
+builder.Services.AddAutoMapper(typeof(ItemProfile), typeof(ServerProfile));
 
 builder.Services.AddDbContext<ApplicationContext>();
 
